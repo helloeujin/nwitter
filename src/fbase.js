@@ -1,6 +1,6 @@
 // for firebase version 9
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -15,4 +15,5 @@ const firebaseConfig = {
 // Initialize Firebase for version 9
 export const app = initializeApp(firebaseConfig);
 const authService = getAuth();
+
 export default authService;
