@@ -1,4 +1,4 @@
-import authService from "fbase";
+import { authService } from "fbase";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -103,9 +103,9 @@ const Auth = () => {
         <button onClick={onSocialClick} name="google">
           Continue with Google
         </button>
-        <button onClick={onSocialClick} name="github">
+        {/* <button onClick={onSocialClick} name="github">
           Continue with Github
-        </button>
+        </button> */}
       </div>
     </div>
   );

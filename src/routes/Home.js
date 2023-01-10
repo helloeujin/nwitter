@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { dbService } from "fbase";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 const Home = () => {
   const [nweet, setNweet] = useState("");
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
+
+    await addDoc(collection(dbService, "nweets"), {
+      nweet,
+      createdAt: serverTimestamp(),
+    });
+    setNweet("");
   };
 
   const onChange = (event) => {
@@ -13,6 +21,10 @@ const Home = () => {
     } = event;
     setNweet(value);
   };
+
+  // useEffect(() => {
+  //   console.log(nweet);
+  // }, [nweet]);
 
   return (
     <div>

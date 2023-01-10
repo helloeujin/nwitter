@@ -1,6 +1,6 @@
 import React from "react";
 import { signOut } from "firebase/auth";
-import authService from "fbase";
+import { authService } from "fbase";
 import { useHistory } from "react-router-dom";
 
 const Profile = () => {
