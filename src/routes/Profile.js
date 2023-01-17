@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
 import { authService } from "fbase";
 import { useHistory } from "react-router-dom";
@@ -10,9 +10,11 @@ import {
   where,
   orderBy,
 } from "@firebase/firestore";
+import { updateProfile } from "@firebase/auth";
 
 const Profile = ({ userObj }) => {
   const history = useHistory();
+  const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
 
   // Log out
   const onLogOutClick = () => {
@@ -20,26 +22,54 @@ const Profile = ({ userObj }) => {
     history.push("/");
   };
 
-  const getMyNweets = async () => {
-    // filtering with where
-    // const q = query(collection(dbService, "nweets"), orderBy("createdAt"));
-    const q = query(
-      collection(dbService, "nweets"),
-      where("creatorId", "==", userObj.uid)
-      // orderBy("createdAt")
-    );
+  // const getMyNweets = async () => {
+  //   //// filtering with where
+  //   const q = query(
+  //     collection(dbService, "nweets"),
+  //     where("creatorId", "==", userObj.uid)
+  //     // orderBy("createdAt")
+  //   );
 
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
-    });
+  //   const querySnapshot = await getDocs(q);
+  //   querySnapshot.forEach((doc) => {
+  //     console.log(doc.id, " => ", doc.data());
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   getMyNweets();
+  // }, []);
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    console.log(newDisplayName);
+
+    if (userObj.displayName !== newDisplayName) {
+      await updateProfile(userObj, { displayName: newDisplayName });
+    }
   };
 
-  useEffect(() => {
-    getMyNweets();
-  }, []);
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setNewDisplayName(value);
+  };
 
-  return <button onClick={onLogOutClick}>Log Out</button>;
+  return (
+    <>
+      <form onSubmit={onSubmit}>
+        <input
+          onChange={onChange}
+          type="text"
+          placeholder="Display name"
+          value={newDisplayName}
+        />
+        <input type="submit" value="Update profile" />
+      </form>
+      <button onClick={onLogOutClick}>Log Out</button>
+    </>
+  );
 };
 
 export default Profile;
