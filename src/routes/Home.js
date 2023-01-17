@@ -49,9 +49,9 @@ const Home = ({ userObj }) => {
     event.preventDefault();
 
     let attachmentUrl = "";
-    if (attachment != "") {
+    if (attachment !== "") {
       const attachmentRef = ref(storageService, `${userObj.uid}/${uuidv4()}`);
-      // upload to firebase storage
+      // upload file to firebase storage
       const response = await uploadString(
         attachmentRef,
         attachment,
