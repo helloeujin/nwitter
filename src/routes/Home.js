@@ -8,7 +8,8 @@ import {
   query,
 } from "firebase/firestore";
 
-const Home = () => {
+const Home = ({ userObj }) => {
+  console.log(userObj);
   const [nweet, setNweet] = useState("");
   const [nweets, setNweets] = useState([]);
 
@@ -34,6 +35,7 @@ const Home = () => {
     await addDoc(collection(dbService, "nweets"), {
       text: nweet,
       createdAt: Date.now(),
+      creatorId: userObj.uid,
       // createdAt: serverTimestamp(),
     });
     setNweet("");
