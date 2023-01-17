@@ -11,7 +11,9 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(authService, (user) => {
       if (user) {
-        // make obj smaller so react can notice the change
+        // setUserObj(user);
+
+        //// make obj smaller so react can notice the change
         setUserObj({
           displayName: user.displayName,
           uid: user.uid,
@@ -25,6 +27,10 @@ function App() {
 
   const refreshUser = () => {
     const user = authService.currentUser;
+    //// by copying the user to {}, react can notice the change
+    // setUserObj(Object.assign({}, user));
+
+    //// make obj smaller so react can notice the change
     setUserObj({
       displayName: user.displayName,
       uid: user.uid,
