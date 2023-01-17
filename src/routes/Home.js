@@ -37,7 +37,6 @@ const Home = ({ userObj }) => {
         id: doc.id,
         ...doc.data(),
       }));
-      console.log(nweetArray);
       setNweets(nweetArray);
     });
   }, []);
