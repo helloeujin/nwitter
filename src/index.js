@@ -10,3 +10,8 @@ root.render(
     <App />
   </React.StrictMode>
 );
+
+// For saving twice for dev
+// <React.StrictMode>
+//   <App />
+// </React.StrictMode>
