@@ -6,27 +6,40 @@ import {
   serverTimestamp,
   getDocs,
   query,
+  onSnapshot,
+  orderBy,
+  doc,
 } from "firebase/firestore";
 
 const Home = ({ userObj }) => {
-  console.log(userObj);
   const [nweet, setNweet] = useState("");
   const [nweets, setNweets] = useState([]);
 
-  // READ
-  const getNweets = async () => {
-    const dbNweets = await getDocs(collection(dbService, "nweets"));
-    dbNweets.forEach((document) => {
-      const nweetObject = {
-        ...document.data(),
-        id: document.id,
-      };
-      setNweets((prev) => [nweetObject, ...prev]);
-    });
-  };
+  // // READ (not realtime)
+  // const getNweets = async () => {
+  //   const dbNweets = await getDocs(collection(dbService, "nweets"));
 
+  //   dbNweets.forEach((document) => {
+  //     const nweetObject = {
+  //       ...document.data(),
+  //       id: document.id,
+  //     };
+  //     console.log(nweetObject);
+  //     setNweets((prev) => [nweetObject, ...prev]);
+  //   });
+  // };
+
+  // READ (realtime)
   useEffect(() => {
-    getNweets();
+    const q = query(collection(dbService, "nweets"), orderBy("createdAt"));
+    onSnapshot(q, (snapshot) => {
+      const nweetArray = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log(nweetArray);
+      setNweets(nweetArray);
+    });
   }, []);
 
   // ADD
@@ -64,7 +77,7 @@ const Home = ({ userObj }) => {
       <div>
         {nweets.map((nweet) => (
           <div key={nweet.id}>
-            <h4>{nweet.nweet}</h4>
+            <h4>{nweet.text}</h4>
           </div>
         ))}
       </div>
