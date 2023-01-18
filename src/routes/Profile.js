@@ -16,12 +16,6 @@ const Profile = ({ userObj, refreshUser }) => {
   const history = useHistory();
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
 
-  // Log out
-  const onLogOutClick = () => {
-    signOut(authService);
-    history.push("/");
-  };
-
   // const getMyNweets = async () => {
   //   //// filtering with where
   //   const q = query(
@@ -39,6 +33,12 @@ const Profile = ({ userObj, refreshUser }) => {
   // useEffect(() => {
   //   getMyNweets();
   // }, []);
+
+  // Log out
+  const onLogOutClick = () => {
+    signOut(authService);
+    history.push("/");
+  };
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -59,18 +59,29 @@ const Profile = ({ userObj, refreshUser }) => {
   };
 
   return (
-    <>
-      <form onSubmit={onSubmit}>
+    <div className="container">
+      <form onSubmit={onSubmit} className="profileForm">
         <input
           onChange={onChange}
           type="text"
           placeholder="Display name"
           value={newDisplayName}
+          autoFocus
+          className="formInput"
         />
-        <input type="submit" value="Update profile" />
+        <input
+          type="submit"
+          value="Update Profile"
+          className="formBtn"
+          style={{
+            marginTop: 10,
+          }}
+        />
       </form>
-      <button onClick={onLogOutClick}>Log Out</button>
-    </>
+      <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
+        Log Out
+      </span>
+    </div>
   );
 };
 
