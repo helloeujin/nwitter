@@ -44,8 +44,8 @@ const Auth = () => {
       />
       <AuthForm />
       <div>
-        <button onClick={onSocialClick} name="github" className="authBtn">
-          Continue with Github <FontAwesomeIcon icon={faGithub} />
+        <button onClick={onSocialClick} name="google" className="authBtn">
+          Continue with Google <FontAwesomeIcon icon={faGoogle} />
         </button>
         {/* <button onClick={onSocialClick} name="github">
           Continue with Github
